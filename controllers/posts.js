@@ -29,6 +29,20 @@ class Posts {
         }
     }
 
+    async updatePost(req, res) {
+
+        try {
+            const postId = req.params.postId
+            const updated = await postSchema.findOneAndUpdate({ _id: postId }, { $set: req.body }, { new: true })
+
+            if (updated)
+                return res.status(200).json({ message: "Posts updated", posts: updated, success: true })
+
+        } catch (error) {
+            throw error
+        }
+    }
+
 
 }
 

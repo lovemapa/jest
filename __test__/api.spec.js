@@ -20,7 +20,7 @@ afterAll(async () => await db.close());
 
 
 
-describe('POST /post', () => {
+describe('Post CRUD', () => {
 
 
     test("tests the base route and returns true for status", async () => {
@@ -50,6 +50,26 @@ describe('POST /post', () => {
 
         expect(response.status).toBe(200)
         expect(response.body.success).toBeTruthy();
+
+    });
+
+
+
+    test("It responds with an updated post", async () => {
+        const newPost = await supertest(app)
+            .post('/post')
+            .send({
+                title: 'Some Title', description: 'Some Description', author: 'pawan'
+            });
+
+        const updatedPost = await supertest(app)
+            .put(`/post/${newPost.body.id}`)
+            .send({ title: 'title updated' });
+
+        expect(updatedPost.body.posts.title).toStrictEqual('title updated')
+        expect(updatedPost.body.posts).toHaveProperty("_id");
+        expect(updatedPost.body.success).toBeTruthy();
+
 
     });
 
