@@ -8,5 +8,6 @@ const postRouter = express.Router()
 postRouter.post('/', post.createPost)
 postRouter.get('/', post.getPosts)
 postRouter.put('/:postId', post.updatePost)
+postRouter.delete('/:postId', post.deletePost)
 
 module.exports = postRouter

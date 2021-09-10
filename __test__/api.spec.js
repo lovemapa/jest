@@ -73,6 +73,23 @@ describe('Post CRUD', () => {
 
     });
 
+
+    test("It responds with an deleted post", async () => {
+        const newPost = await supertest(app)
+            .post('/post')
+            .send({
+                title: 'Some Title', description: 'Some Description', author: 'pawan'
+            });
+
+        const updatedPost = await supertest(app)
+            .delete(`/post/${newPost.body.id}`)
+
+        expect(updatedPost.body.posts).toHaveProperty("_id");
+        expect(updatedPost.body.success).toBeTruthy();
+
+
+    });
+
 });
 
 

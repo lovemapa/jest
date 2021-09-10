@@ -44,6 +44,23 @@ class Posts {
     }
 
 
+
+    async deletePost(req, res) {
+
+        try {
+            const postId = req.params.postId
+            const deleted = await postSchema.findOneAndRemove({ _id: postId })
+
+            if (deleted)
+                return res.status(200).json({ message: "Posts Deleted", posts: deleted, success: true })
+
+
+        } catch (error) {
+            throw error
+        }
+    }
+
+
 }
 
 module.exports = Posts
